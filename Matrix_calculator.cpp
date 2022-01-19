@@ -51,7 +51,7 @@ void multiplicationOfMatrixWithScalar()
 {
 	int rows;
 	int columns;
-	int scalar;
+	double scalar;
 
 	//create matrix
 	cout << "Count of rows = ";
@@ -66,7 +66,7 @@ void multiplicationOfMatrixWithScalar()
 		return;
 	}
 
-	int** matrix = createMatrixOfIntegers(rows, columns);
+	double** matrix = createMatrixOfFractions(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
@@ -78,7 +78,7 @@ void multiplicationOfMatrixWithScalar()
 	cout << "Scalar = ";
 	cin >> scalar;
 
-	int** finalMatrix = createMatrixOfIntegers(rows, columns);
+	double** finalMatrix = createMatrixOfFractions(rows, columns);
 
 	//multiplying
 	for (int i = 0; i < rows; i++)
@@ -138,8 +138,8 @@ void multiplicationOfMatrixWithScalar()
 	}
 
 	//free
-	free(finalMatrix, rows);
-	free(matrix, rows);
+	freeMatrixesOfFractions(finalMatrix, rows);
+	freeMatrixesOfFractions(matrix, rows);
 }
 
 void multiplicationOfMatrixWithMatrix()
@@ -152,7 +152,7 @@ void multiplicationOfMatrixWithMatrix()
 	cout << "Columns of the first matrix : ";
 	cin >> matrix1Columns;
 
-	int** matrix1 = createMatrixOfIntegers(matrix1Rows, matrix1Columns);
+	double** matrix1 = createMatrixOfFractions(matrix1Rows, matrix1Columns);
 
 	cout << "Input the first matrix" << endl;
 
@@ -179,7 +179,7 @@ void multiplicationOfMatrixWithMatrix()
 		return;
 	}
 
-	int** matrix2 = createMatrixOfIntegers(matrix2Rows, matrix2Columns);
+	double** matrix2 = createMatrixOfFractions(matrix2Rows, matrix2Columns);
 
 	cout << "Input the second matrix" << endl;
 
@@ -192,7 +192,7 @@ void multiplicationOfMatrixWithMatrix()
 	}
 
 	//create matrix
-	int** finalMatrix = createMatrixOfIntegers(matrix1Rows, matrix2Columns);
+	double** finalMatrix = createMatrixOfFractions(matrix1Rows, matrix2Columns);
 
 	//multiplication
 	for (int i = 0; i < matrix1Rows; i++)
@@ -356,12 +356,12 @@ void multiplicationOfMatrixWithMatrix()
 
 
 	//free
-	free(finalMatrix, matrix1Rows);
-	free(matrix1, matrix1Rows);
-	free(matrix2, matrix2Rows);
+	freeMatrixesOfFractions(finalMatrix, matrix1Rows);
+	freeMatrixesOfFractions(matrix1, matrix1Rows);
+	freeMatrixesOfFractions(matrix2, matrix2Rows);
 }
 
-void subMatrix(int** matrix, int** temp, int p, int q, int size)
+void subMatrix(double** matrix, double** temp, int p, int q, int size)
 {
 	int i = 0, j = 0;
 	for (int row = 0; row < size; row++)
@@ -381,18 +381,18 @@ void subMatrix(int** matrix, int** temp, int p, int q, int size)
 	}
 }
 
-int determinantOfMatrix(int** matrix, int size)
+double determinantOfMatrix(double** matrix, int size)
 {
-	int determinant = 0;
+	double determinant = 0;
 	if (size == 1)
 	{
 		return matrix[0][0];
 	}
 	if (size == 2)
 	{
-		return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
+		return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 	}
-	int** temp = createMatrixOfIntegers(size - 1, size - 1);
+	double** temp = createMatrixOfFractions(size - 1, size - 1);
 	int sign = 1;
 	for (int i = 0; i < size; i++)
 	{
@@ -401,7 +401,7 @@ int determinantOfMatrix(int** matrix, int size)
 		sign = -sign;
 	}
 
-	free(temp, size - 1);
+	freeMatrixesOfFractions(temp, size - 1);
 
 	return determinant;
 }
@@ -423,7 +423,7 @@ void findTheDeterminantOfMatrix()
 		return;
 	}
 
-	int** matrix = createMatrixOfIntegers(rows, columns);
+	double** matrix = createMatrixOfFractions(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
@@ -434,7 +434,7 @@ void findTheDeterminantOfMatrix()
 	}
 
 	//calculation
-	int result = determinantOfMatrix(matrix, rows);
+	double result = determinantOfMatrix(matrix, rows);
 
 	//print
 	int half = rows / 2;
@@ -467,14 +467,14 @@ void findTheDeterminantOfMatrix()
 	}
 
 	//free
-	free(matrix, rows);
+	freeMatrixesOfFractions(matrix, rows);
 }
 
 void divisionOfMatrixByScalar()
 {
 	int rows;
 	int columns;
-	int scalar;
+	double scalar;
 
 	//create matrix
 	cout << "Count of rows = ";
@@ -490,7 +490,7 @@ void divisionOfMatrixByScalar()
 		return;
 	}
 
-	int** matrix = createMatrixOfIntegers(rows, columns);
+	double** matrix = createMatrixOfFractions(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
@@ -512,7 +512,7 @@ void divisionOfMatrixByScalar()
 	//dividing
 	for (int i = 0; i < rows; i++)
 		for (int y = 0; y < columns; y++)
-			finalMatrix[i][y] = round(((matrix[i][y]) * 1.0 / scalar) * 100) / 100.0;
+			finalMatrix[i][y] = round((matrix[i][y] / scalar) * 100) / 100.0;
 
 
 	//printing
@@ -564,7 +564,7 @@ void divisionOfMatrixByScalar()
 
 	//free
 	freeMatrixesOfFractions(finalMatrix, rows);
-	free(matrix, rows);
+	freeMatrixesOfFractions(matrix, rows);
 }
 
 void findingReverseMatrix()
@@ -586,7 +586,7 @@ void findingReverseMatrix()
 		return;
 	}
 
-	int** matrix = createMatrixOfIntegers(rows, columns);
+	double** matrix = createMatrixOfFractions(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
@@ -597,7 +597,7 @@ void findingReverseMatrix()
 	}
 
 
-	int determinant = determinantOfMatrix(matrix, rows);
+	double determinant = determinantOfMatrix(matrix, rows);
 	if (determinant == 0)
 	{
 		cout << "Irreversible matrix!";
@@ -609,18 +609,18 @@ void findingReverseMatrix()
 		newMatrix[0][0] = round(100.0 / matrix[0][0]) / 100;
 	else
 	{
-		int** temp = createMatrixOfIntegers(rows - 1, columns - 1);
+		double** temp = createMatrixOfFractions(rows - 1, columns - 1);
 
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < columns; j++)
 			{
 				subMatrix(matrix, temp, i, j, rows);
-				int determinantOfTemp = determinantOfMatrix(temp, rows - 1);
-				newMatrix[i][j] = round(determinantOfTemp * 1.0 / determinant * 100) / 100.0;
+				double determinantOfTemp = determinantOfMatrix(temp, rows - 1);
+				newMatrix[i][j] = round(determinantOfTemp / determinant * 100) / 100;
 			}
 		}
-		free(temp, rows - 1);
+		freeMatrixesOfFractions(temp, rows - 1);
 	}
 
 	//print
@@ -683,7 +683,7 @@ void findingReverseMatrix()
 		}
 		cout << '|' << endl;
 	}
-	free(matrix, rows);
+	freeMatrixesOfFractions(matrix, rows);
 
 	freeMatrixesOfFractions(newMatrix, rows);
 }
@@ -706,7 +706,7 @@ void transposingMatrix()
 		return;
 	}
 
-	int** matrix = createMatrixOfIntegers(rows, columns);
+	double** matrix = createMatrixOfFractions(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
 	{
@@ -717,7 +717,7 @@ void transposingMatrix()
 	}
 
 	//transposing
-	int** newMatrix = createMatrixOfIntegers(columns, rows);
+	double** newMatrix = createMatrixOfFractions(columns, rows);
 	for (int i = 0; i < columns; i++)
 	{
 		for (int j = 0; j < rows; j++)
@@ -865,6 +865,6 @@ void transposingMatrix()
 		}
 	}
 
-	free(matrix, rows);
-	free(newMatrix, columns);
+	freeMatrixesOfFractions(matrix, rows);
+	freeMatrixesOfFractions(newMatrix, columns);
 }
