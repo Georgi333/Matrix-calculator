@@ -1,9 +1,7 @@
 #pragma once
 #include<iostream>
 
-void free(int** matrix, int rows);
 void freeMatrixesOfFractions(double** matrix, int rows);
-int** createMatrixOfIntegers(int rows, int columns);
 double** createMatrixOfFractions(int rows, int columns);
 void multiplicationOfMatrixWithScalar();
 void multiplicationOfMatrixWithMatrix();

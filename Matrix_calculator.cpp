@@ -3,13 +3,6 @@
 using namespace std;
 #include<iomanip>
 
-void free(int** matrix, int rows)
-{
-	for (int i = 0; i < rows; i++)
-		delete[] matrix[i];
-
-	delete[] matrix;
-}
 
 void freeMatrixesOfFractions(double** matrix, int rows)
 {
@@ -19,18 +12,6 @@ void freeMatrixesOfFractions(double** matrix, int rows)
 	delete[] matrix;
 }
 
-int** createMatrixOfIntegers(int rows, int columns)
-{
-	int** matrix = new int* [rows];
-
-	for (int i = 0; i < rows; i++)
-		matrix[i] = new int[columns];
-	for (int i = 0; i < rows; i++)
-		for (int j = 0; j < columns; j++)
-			matrix[i][j] = 0;
-
-	return matrix;
-}
 
 double** createMatrixOfFractions(int rows, int columns)
 {
