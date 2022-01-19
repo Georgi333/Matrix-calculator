@@ -59,6 +59,14 @@ void multiplicationOfMatrixWithScalar()
 	cin >> rows;
 	cout << "Count of columns = ";
 	cin >> columns;
+
+	//validation
+	if (rows < 1 || columns < 1)
+	{
+		cout << "Invalid imput";
+		return;
+	}
+
 	int** matrix = createMatrixOfIntegers(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
@@ -166,7 +174,7 @@ void multiplicationOfMatrixWithMatrix()
 	cin >> matrix2Columns;
 
 	//is valid?
-	if (matrix1Columns != matrix2Rows)
+	if (matrix1Columns != matrix2Rows || matrix1Columns < 1 || matrix1Rows < 1 || matrix2Rows < 1)
 	{
 		cout << "Invalid input!";
 		return;
@@ -410,7 +418,7 @@ void findTheDeterminantOfMatrix()
 	cin >> columns;
 
 	// validation
-	if (rows != columns && rows <= 4 && rows >= 1)
+	if (rows != columns || rows > 4 || rows < 1)
 	{
 		cout << "Invalid imput!";
 		return;
@@ -474,6 +482,14 @@ void divisionOfMatrixByScalar()
 	cin >> rows;
 	cout << "Count of columns = ";
 	cin >> columns;
+
+	//validation
+	if (rows < 1 || columns < 1)
+	{
+		cout << "Invalid imput";
+		return;
+	}
+
 	int** matrix = createMatrixOfIntegers(rows, columns);
 	cout << "Input a matrix:" << endl;
 	for (int i = 0; i < rows; i++)
@@ -559,7 +575,7 @@ void findingReverseMatrix()
 	cin >> columns;
 
 	//validation
-	if (rows != columns)
+	if (rows != columns || rows < 1)
 	{
 		cout << "Invalid input!";
 		return;
@@ -583,18 +599,32 @@ void findingReverseMatrix()
 		return;
 	}
 	//reversing
-	int** temp = createMatrixOfIntegers(rows - 1, columns - 1);
 	double** newMatrix = createMatrixOfFractions(rows, columns);
-	for (int i = 0; i < rows; i++)
+	if (rows == 1)
+		newMatrix[0][0] = round(100.0 / matrix[0][0]) / 100;
+	else
 	{
-		for (int j = 0; j < columns; j++)
+		int** temp = createMatrixOfIntegers(rows - 1, columns - 1);
+
+		for (int i = 0; i < rows; i++)
 		{
-			subMatrix(matrix, temp, i, j, rows);
-			int determinantOfTemp = determinantOfMatrix(temp, rows - 1);
-			newMatrix[i][j] = round(determinantOfTemp * 1.0 / determinant * 100) / 100.0;
+			for (int j = 0; j < columns; j++)
+			{
+				subMatrix(matrix, temp, i, j, rows);
+				int determinantOfTemp = determinantOfMatrix(temp, rows - 1);
+				newMatrix[i][j] = round(determinantOfTemp * 1.0 / determinant * 100) / 100.0;
+			}
 		}
+		free(temp, rows - 1);
 	}
+
 	//print
+	if (rows == 1)
+	{
+		cout << '|' << setw(3) << matrix[0][0] << '|' << "-1 = |" << setw(3) << newMatrix[0][0] << '|';
+		return;
+	}
+
 	cout << '|';
 	for (int j = 0; j < columns; j++)
 	{
@@ -649,7 +679,7 @@ void findingReverseMatrix()
 		cout << '|' << endl;
 	}
 	free(matrix, rows);
-	free(temp, rows - 1);
+
 	freeMatrixesOfFractions(newMatrix, rows);
 }
 
@@ -664,6 +694,12 @@ void transposingMatrix()
 	cout << "Count of columns = ";
 	cin >> columns;
 
+	//validation
+	if (rows < 1 || columns < 1)
+	{
+		cout << "Invalid imput";
+		return;
+	}
 
 	int** matrix = createMatrixOfIntegers(rows, columns);
 	cout << "Input a matrix:" << endl;
@@ -685,7 +721,20 @@ void transposingMatrix()
 		}
 	}
 
-	//print
+	//
+
+	if (rows == 1)
+	{
+		cout << '|';
+		for (int i = 0; i < columns; i++)
+		{
+			cout << setw(3) << matrix[0][i];
+		}
+		cout << '|' << 't' << " = " << '|' << setw(3) << newMatrix[0][0] << '|' << endl;
+		for (int i = 1; i < columns; i++)
+			cout << setw(7 + 3 * columns) << '|' << setw(3) << newMatrix[i][0] << '|' << endl;
+		return;
+	}
 
 	if (rows > columns)
 	{
