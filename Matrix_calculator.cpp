@@ -19,7 +19,6 @@ void freeMatrixesOfFractions(double** matrix, int rows)
 	delete[] matrix;
 }
 
-
 int** createMatrixOfIntegers(int rows, int columns)
 {
 	int** matrix = new int* [rows];
@@ -45,7 +44,6 @@ double** createMatrixOfFractions(int rows, int columns)
 
 	return matrix;
 }
-
 
 void multiplicationOfMatrixWithScalar()
 {
@@ -567,6 +565,19 @@ void divisionOfMatrixByScalar()
 	freeMatrixesOfFractions(matrix, rows);
 }
 
+double** transposeMatrix(double** matrix, int rows, int columns)
+{
+	double** newMatrix = createMatrixOfFractions(columns, rows);
+	for (int i = 0; i < columns; i++)
+	{
+		for (int j = 0; j < rows; j++)
+		{
+			newMatrix[i][j] = matrix[j][i];
+		}
+	}
+	return newMatrix;
+}
+
 void findingReverseMatrix()
 {
 
@@ -606,21 +617,28 @@ void findingReverseMatrix()
 	//reversing
 	double** newMatrix = createMatrixOfFractions(rows, columns);
 	if (rows == 1)
-		newMatrix[0][0] = round(100.0 / matrix[0][0]) / 100;
+		newMatrix[0][0] = round(100 / matrix[0][0]) / 100;
 	else
 	{
 		double** temp = createMatrixOfFractions(rows - 1, columns - 1);
-
+		int sign;
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < columns; j++)
 			{
-				subMatrix(matrix, temp, i, j, rows);
+				subMatrix(matrix, temp, j, i, rows);
+
 				double determinantOfTemp = determinantOfMatrix(temp, rows - 1);
-				newMatrix[i][j] = round(determinantOfTemp / determinant * 100) / 100;
+				if ((i + j) % 2 == 0)
+					sign = 1;
+				else
+					sign = -1;
+				newMatrix[i][j] = sign * round(determinantOfTemp / determinant * 100) / 100;
+
 			}
 		}
 		freeMatrixesOfFractions(temp, rows - 1);
+
 	}
 
 	//print
@@ -717,16 +735,9 @@ void transposingMatrix()
 	}
 
 	//transposing
-	double** newMatrix = createMatrixOfFractions(columns, rows);
-	for (int i = 0; i < columns; i++)
-	{
-		for (int j = 0; j < rows; j++)
-		{
-			newMatrix[i][j] = matrix[j][i];
-		}
-	}
+	double** newMatrix = transposeMatrix(matrix, rows, columns);
 
-	//
+	//print
 
 	if (rows == 1)
 	{
