@@ -1,3 +1,19 @@
+/**
+*
+* Solution to course project # 11
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2021/2022
+*
+* @author Georgi Georgiev
+* @idnumber 6MI0600059
+* @compiler VC
+*
+* file with helper functions
+*
+*/
+
+
 #include"Matrix calculator.h"
 #include <iostream>
 using namespace std;
