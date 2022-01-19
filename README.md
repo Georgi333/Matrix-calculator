@@ -7,4 +7,4 @@ Operations:
 5. Find reverse matrix. 
 6. Transposing a matrix
 
-* The program requires entering the operation and operands from the console*
+* The program requires entering the operation and operands from the console
