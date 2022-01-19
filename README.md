@@ -6,3 +6,5 @@ Operations:
 4. Division of matrix by scalar. 
 5. Find reverse matrix. 
 6. Transposing a matrix
+
+* The program requires entering the operation and operands from the console*
